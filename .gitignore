@@ -29,7 +29,6 @@ desktop.ini
 .vscode/
 
 # compiled classes
-out/
 *.class
 
 # output of the program
