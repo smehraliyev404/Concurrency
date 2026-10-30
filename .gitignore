@@ -1,0 +1,36 @@
+# General macOS files
+.DS_Store
+.localized
+__MACOSX/
+.AppleDouble
+.LSOverride
+
+# Icon files (e.g. customized folder icons)
+Icon?
+
+# Resource forks
+._*
+
+# Files that may appear on external disks / network shares
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.apdisk
+
+# Windows files
+Thumbs.db
+desktop.ini
+
+# IDE settings
+.idea/
+*.iml
+.vscode/
+
+# compiled classes
+out/
+*.class
+
+# output of the program
+result.jpg
