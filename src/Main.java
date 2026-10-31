@@ -1,4 +1,9 @@
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class Main {
 
@@ -41,5 +46,40 @@ public class Main {
         System.out.println("File: " + fileName);
         System.out.println("Square size: " + squareSize);
         System.out.println("Mode: " + (mode.equals("S") ? "single-threaded" : "multi-threaded"));
+
+        BufferedImage image;
+        try {
+            image = loadImage(file);
+        } catch (IOException e) {
+            System.out.println("Error: could not read the image: " + e.getMessage());
+            return;
+        }
+        if (image == null) {
+            System.out.println("Error: could not read the image: " + fileName);
+            return;
+        }
+        System.out.println("Image size: " + image.getWidth() + " x " + image.getHeight());
+
+        SwingUtilities.invokeLater(() -> showWindow(image, fileName));
+    }
+
+    // reads the jpg and copies it into a plain RGB image, so every pixel is one int in the same format
+    private static BufferedImage loadImage(File file) throws IOException {
+        BufferedImage original = ImageIO.read(file);
+        if (original == null) {
+            return null;
+        }
+        BufferedImage image = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
+        image.getGraphics().drawImage(original, 0, 0, null);
+        return image;
+    }
+
+    private static void showWindow(BufferedImage image, String title) {
+        JFrame frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new ImagePanel(image));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }
