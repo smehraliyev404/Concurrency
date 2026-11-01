@@ -71,6 +71,15 @@ public class Main {
             System.out.println("Multi-threaded mode is not done yet, running single-threaded");
             pixelator.processRegion(0, 0, image.getWidth(), image.getHeight());
         }
+
+        File result = new File("result.jpg");
+        try {
+            ImageIO.write(image, "jpg", result);
+        } catch (IOException e) {
+            System.out.println("Error: could not save the result: " + e.getMessage());
+            return;
+        }
+        System.out.println("Done, saved to " + result.getAbsolutePath());
     }
 
     // reads the jpg and copies it into a plain rgb image, so every pixel is one int in the same format
