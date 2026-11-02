@@ -62,9 +62,11 @@ public class Main {
         }
         System.out.println("Image size: " + image.getWidth() + " x " + image.getHeight());
 
+        // wait until the window is shown before the processing starts
         SwingUtilities.invokeAndWait(() -> showWindow(image, fileName));
 
         Pixelator pixelator = new Pixelator(image, squareSize, panel);
+        long start = System.nanoTime();
         if (mode.equals("S")) {
             pixelator.processRegion(0, 0, image.getWidth(), image.getHeight());
         } else {
@@ -72,6 +74,8 @@ public class Main {
             System.out.println("CPU cores: " + cores);
             pixelator.processMultiThreaded(cores);
         }
+        double seconds = (System.nanoTime() - start) / 1_000_000_000.0;
+        System.out.printf("Processing took %.2f s%n", seconds);
 
         File result = new File("result.jpg");
         try {

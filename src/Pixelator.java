@@ -3,11 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 
-// does the averaging. processRegion is main function used
+// does the averaging. processRegion is used by both modes
 public class Pixelator {
 
     // small pause after every square so the progress can be seen in the window
-    private static final int DELAY_MS = 1;
+    private static final int DELAY_MS = 5;
 
     private final BufferedImage image;
     private final int squareSize;
@@ -23,6 +23,7 @@ public class Pixelator {
     public void processRegion(int startX, int startY, int endX, int endY) throws InterruptedException {
         for (int y = startY; y < endY; y += squareSize) {
             for (int x = startX; x < endX; x += squareSize) {
+                // squares at the right and bottom edges can be smaller
                 int w = Math.min(squareSize, endX - x);
                 int h = Math.min(squareSize, endY - y);
                 averageSquare(x, y, w, h);
@@ -38,6 +39,7 @@ public class Pixelator {
         List<Thread> threads = new ArrayList<>();
 
         for (int t = 0; t < threadCount; t++) {
+            // strips are cut on square borders, so no square is shared between two threads
             int startY = squaresY * t / threadCount * squareSize;
             int endY = Math.min(squaresY * (t + 1) / threadCount * squareSize, image.getHeight());
 
