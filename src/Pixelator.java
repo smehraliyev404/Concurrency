@@ -1,4 +1,6 @@
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JPanel;
 
 // does the averaging. processRegion is main function used
@@ -27,6 +29,37 @@ public class Pixelator {
                 panel.repaint();
                 Thread.sleep(DELAY_MS);
             }
+        }
+    }
+
+    // splits the image into horizontal strips, one per thread, and runs processRegion
+    public void processMultiThreaded(int threadCount) throws InterruptedException {
+        int squaresY = (image.getHeight() + squareSize - 1) / squareSize;
+        List<Thread> threads = new ArrayList<>();
+
+        for (int t = 0; t < threadCount; t++) {
+            int startY = squaresY * t / threadCount * squareSize;
+            int endY = Math.min(squaresY * (t + 1) / threadCount * squareSize, image.getHeight());
+
+            if (startY >= endY) {
+                continue;
+            }
+
+            Thread thread = new Thread(() -> {
+                try {
+                    processRegion(0, startY, image.getWidth(), endY);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            });
+            threads.add(thread);
+            thread.start();
+        }
+        System.out.println("Started " + threads.size() + " threads");
+
+        // wait until every thread is finished
+        for (Thread thread : threads) {
+            thread.join();
         }
     }
 

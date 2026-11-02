@@ -68,8 +68,9 @@ public class Main {
         if (mode.equals("S")) {
             pixelator.processRegion(0, 0, image.getWidth(), image.getHeight());
         } else {
-            System.out.println("Multi-threaded mode is not done yet, running single-threaded");
-            pixelator.processRegion(0, 0, image.getWidth(), image.getHeight());
+            int cores = Runtime.getRuntime().availableProcessors();
+            System.out.println("CPU cores: " + cores);
+            pixelator.processMultiThreaded(cores);
         }
 
         File result = new File("result.jpg");
