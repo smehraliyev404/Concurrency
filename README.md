@@ -23,6 +23,8 @@ Concurrency/
   - `java.lang.Thread` for the threads
 
   The averaging of the squares is written by hand, no library method does that part.
+  
+- A jpg image of your choice. No image comes with the repository, any `.jpg` or `.jpeg` of any size works.
 
 Since only the JDK is used, it runs the same on macOS and Windows. You can check your java version with `java -version`.
 
