@@ -26,7 +26,11 @@ Concurrency/
   
 - A jpg image of your choice. No image comes with the repository, any `.jpg` or `.jpeg` of any size works.
 
-Since only the JDK is used, it runs the same on macOS and Windows. You can check your java version with `java -version`.
+Since only the JDK is used, it runs the same on macOS and Windows. You can check your java version with `java -version` (and `javac -version` for the compiler).
+
+If java is not installed, download the latest JDK from https://www.oracle.com/java/technologies/downloads/ and run the installer for your system. On macOS it can also be installed with Homebrew: `brew install --cask oracle-jdk`.
+
+After installing, open a new terminal and check `java -version` again.
 
 ## How to run
 
